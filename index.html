@@ -150,23 +150,24 @@
     <section id="thesis" class="thesis" aria-labelledby="thesis-h">
       <h2 id="thesis-h">MSc thesis</h2>
       <div class="body">
-        <h3>Temporally coherent weather downscaling with diffusion posterior sampling</h3>
-        <p class="sub">TU Delft, defended October 2026. PyTorch, trained on the Snellius supercomputer.</p>
-        <p>Coarse global reanalysis (ERA5) is too blurry for local wind and temperature. The thesis generates
-          multi-day, ~5.5 km resolution sequences over Europe that match the CERRA regional reanalysis. It does
-          this with a diffusion model guided at sampling time to stay consistent with the coarse observations
-          (diffusion posterior sampling, DPS), conditioned on orography.</p>
+        <h3>Statistical climate downscaling with neural operators and diffusion models</h3>
+        <p class="sub">MSc thesis, TU Delft, 2026. PyTorch, trained on the Snellius supercomputer.
+          <a href="https://resolver.tudelft.nl/uuid:785a2341-edf8-4b72-8c72-2c47f62ec16c">Read it in the TU Delft repository</a>.</p>
+        <p>Coarse reanalysis such as ERA5 (~25 km) misses local structure, and simulating it at high resolution
+          is expensive. The thesis treats downscaling from ERA5 to the CERRA reanalysis (~5.5 km) as an inverse
+          problem: a diffusion prior trained on CERRA is combined with ERA5 through a learned forward operator
+          (diffusion posterior sampling, DPS). A sequential prior that jointly models neighbouring states adds
+          temporal structure.</p>
         <ul>
-          <li>Compared vanilla DPS, which samples each frame independently, with sequential DPS for 10 m wind and
-            2 m temperature, using 8-member ensembles.</li>
-          <li>Judged realism with physics-aware diagnostics: spatial and temporal power spectra,
-            log-spectral distance, CRPS on fields and on frame-to-frame increments, plus vorticity, divergence
-            and kinetic energy.</li>
-          <li>Traced a null ablation result to a sampler bug that made two guidance modes structurally identical.
-            After the fix, forecast guidance gave no detectable temporal benefit for wind and a metric-dependent
-            effect for temperature, a result I report as it is.</li>
+          <li>Compared a U-Net baseline, neural operators, vanilla DPS and sequential DPS for 10 m wind and 2 m
+            temperature over Central Europe and Iberia.</li>
+          <li>The U-Net has the lowest RMSE but is too smooth, and neural operators are smoother still. Both DPS
+            variants keep fine-scale variability close to CERRA.</li>
+          <li>The sequential prior cuts temporal log-spectral distance by 1.5–4× against vanilla DPS and 2–15×
+            against the U-Net at comparable point-wise accuracy. The exception is 2 m temperature over Iberia.</li>
         </ul>
-        <p class="note">The code is private. It extends the GeoDiff research codebase by Carlo Saccardi.</p>
+        <p class="note">Supervised by Justin Dauwels and Carlo Saccardi. The code is private; it extends the GeoDiff
+          research codebase by Carlo Saccardi.</p>
       </div>
     </section>
 
@@ -313,7 +314,7 @@
           <li><strong>Intern, TNO</strong>
             <span class="where">Physics-informed learning models for battery-ageing prediction in battery management systems.</span></li>
           <li><strong>MSc Electrical Engineering, Signals &amp; Systems, TU Delft</strong>
-            <span class="where">Thesis on diffusion posterior sampling for weather downscaling, defended 2026.</span></li>
+            <span class="where">Thesis: statistical climate downscaling with neural operators and diffusion models, 2026.</span></li>
           <li><strong>Research intern, IIT Bombay</strong>
             <span class="where">A coupled field–circuit periodic steady-state algorithm for computational electromagnetics (FEMM, Octave).</span></li>
           <li><strong>Power-system fault analysis tool</strong>
