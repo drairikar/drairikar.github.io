@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Devashish Rairikar: signal processing and machine learning</title>
+<meta name="description" content="Portfolio of Devashish Rairikar, MSc Electrical Engineering (Signals & Systems), TU Delft. Signal processing, machine learning, diffusion models for weather downscaling.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F3F5F7;
+    --ink: #17202B;
+    --slate: #556273;
+    --rule: #D3DAE2;
+    --delft: #1E4FA3;
+    --delft-soft: #A9BBD8;
+    --serif: "Spectral", Georgia, serif;
+    --sans: "Atkinson Hyperlegible", system-ui, sans-serif;
+    --margin: 11rem;
+    --measure: 40rem;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 1.125rem/1.65 var(--serif);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--delft); text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 2px solid var(--delft); outline-offset: 3px; border-radius: 2px; }
+
+  .wrap { max-width: 72rem; margin: 0 auto; padding: 0 2rem; }
+
+  /* Top bar */
+  .bar {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+    padding: 1.5rem 0; font: 400 0.95rem/1.4 var(--sans);
+  }
+  .bar .who { font-weight: 700; color: var(--ink); text-decoration: none; }
+  .bar nav { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .bar nav a { color: var(--slate); text-decoration: none; }
+  .bar nav a:hover { color: var(--delft); }
+
+  /* Hero */
+  .hero { padding: 4.5rem 0 0; }
+  .hero h1 {
+    margin: 0; font: 300 clamp(3rem, 9vw, 6.75rem)/0.95 var(--serif);
+    letter-spacing: -0.02em;
+  }
+  .hero .lede {
+    margin: 1.75rem 0 0; max-width: 34rem;
+    font: 300 1.45rem/1.5 var(--serif); color: var(--slate);
+  }
+  .trace { display: block; width: 100%; height: 9rem; margin: 3rem 0 0; overflow: visible; }
+  .trace path { fill: none; stroke: var(--delft); stroke-width: 1.4; stroke-linejoin: round; }
+  .trace line { stroke: var(--rule); stroke-width: 1; }
+
+  /* Sections with a margin label */
+  section { display: grid; grid-template-columns: var(--margin) minmax(0, 1fr); gap: 0 2.5rem;
+            padding: 4.5rem 0; border-top: 1px solid var(--rule); }
+  .hero + section { border-top: 0; }
+  section > h2 {
+    margin: 0.35rem 0 0; font: italic 400 1.15rem/1.3 var(--serif); color: var(--slate);
+  }
+  .body { min-width: 0; }
+
+  /* Thesis */
+  .thesis h3 { margin: 0; font: 400 clamp(1.75rem, 3.4vw, 2.4rem)/1.2 var(--serif); max-width: 30ch; }
+  .thesis .sub { margin: 0.75rem 0 0; font: 400 1rem/1.5 var(--sans); color: var(--slate); }
+  .thesis p, .thesis ul { max-width: var(--measure); }
+  .thesis ul { padding-left: 1.1rem; margin: 1.25rem 0 0; }
+  .thesis li { margin: 0 0 0.6rem; }
+  .thesis li::marker { color: var(--delft); }
+  .note { font: 400 0.95rem/1.5 var(--sans); color: var(--slate); max-width: var(--measure); margin-top: 1.5rem; }
+
+  /* Projects */
+  .group + .group { margin-top: 3.5rem; }
+  .group > h3 { margin: 0 0 0.5rem; font: 700 0.95rem/1.4 var(--sans); color: var(--slate); }
+  .project { padding: 1.6rem 0; border-top: 1px solid var(--rule); }
+  .project > div { max-width: var(--measure); }
+  .project:first-of-type { border-top: 0; }
+  .project h4 { margin: 0; font: 500 1.35rem/1.3 var(--serif); }
+  .project h4 a { color: var(--ink); text-decoration: none; }
+  .project h4 a:hover { color: var(--delft); text-decoration: underline; }
+  .project p { margin: 0.4rem 0 0; }
+  .project .result { color: var(--delft); }
+  .project .tools { margin-top: 0.6rem; font: 400 0.9rem/1.4 var(--sans); color: var(--slate); }
+  .project figure { margin: 1.25rem 0 0; max-width: 46rem; }
+  .project img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); background: #fff; }
+  .project figcaption { font: 400 0.82rem/1.4 var(--sans); color: var(--slate); margin-top: 0.4rem; }
+
+  /* Experience */
+  .timeline { list-style: none; margin: 0; padding: 0; max-width: var(--measure); }
+  .timeline li { position: relative; padding: 0 0 1.75rem 1.6rem; border-left: 1px solid var(--rule); }
+  .timeline li:last-child { padding-bottom: 0; }
+  .timeline li::before {
+    content: ""; position: absolute; left: -5px; top: 0.55rem; width: 9px; height: 9px;
+    border-radius: 50%; background: var(--paper); border: 1.5px solid var(--delft);
+  }
+  .timeline li:first-child::before { background: var(--delft); }
+  .timeline strong { font-weight: 500; }
+  .timeline .where { display: block; font: 400 0.95rem/1.5 var(--sans); color: var(--slate); }
+
+  .tools-list { max-width: var(--measure); margin: 0; }
+  .tools-list div { display: grid; grid-template-columns: 9rem 1fr; gap: 1rem; padding: 0.35rem 0; }
+  .tools-list dt { font: 700 0.95rem/1.6 var(--sans); color: var(--slate); }
+  .tools-list dd { margin: 0; }
+
+  footer { padding: 3rem 0 4rem; border-top: 1px solid var(--rule); font: 400 0.95rem/1.5 var(--sans); color: var(--slate); }
+
+  @media (max-width: 44rem) {
+    .wrap { padding: 0 1.25rem; }
+    section { grid-template-columns: 1fr; padding: 3.25rem 0; }
+    section > h2 { margin: 0 0 1.25rem; }
+    .hero { padding-top: 2.5rem; }
+    .bar { flex-direction: column; gap: 0.5rem; }
+    .tools-list div { grid-template-columns: 1fr; gap: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <a class="who" href="#top">Devashish Rairikar</a>
+    <nav aria-label="Sections">
+      <a href="#thesis">Thesis</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="https://github.com/drairikar">GitHub</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <div class="hero">
+      <h1>Devashish<br>Rairikar</h1>
+      <p class="lede">I build signal processing and machine-learning methods for noisy physical data, and I test
+        whether they are right, not just plausible. MSc Electrical Engineering, TU Delft. Based in Rotterdam.</p>
+      <svg class="trace" viewBox="0 0 1000 140" preserveAspectRatio="none" aria-hidden="true">
+        <line x1="0" y1="70" x2="1000" y2="70"/>
+        <path id="trace"/>
+      </svg>
+    </div>
+
+    <section id="thesis" class="thesis" aria-labelledby="thesis-h">
+      <h2 id="thesis-h">MSc thesis</h2>
+      <div class="body">
+        <h3>Temporally coherent weather downscaling with diffusion posterior sampling</h3>
+        <p class="sub">TU Delft, defended October 2026. PyTorch, trained on the Snellius supercomputer.</p>
+        <p>Coarse global reanalysis (ERA5) is too blurry for local wind and temperature. The thesis generates
+          multi-day, ~5.5 km resolution sequences over Europe that match the CERRA regional reanalysis. It does
+          this with a diffusion model guided at sampling time to stay consistent with the coarse observations
+          (diffusion posterior sampling, DPS), conditioned on orography.</p>
+        <ul>
+          <li>Compared vanilla DPS, which samples each frame independently, with sequential DPS for 10 m wind and
+            2 m temperature, using 8-member ensembles.</li>
+          <li>Judged realism with physics-aware diagnostics: spatial and temporal power spectra,
+            log-spectral distance, CRPS on fields and on frame-to-frame increments, plus vorticity, divergence
+            and kinetic energy.</li>
+          <li>Traced a null ablation result to a sampler bug that made two guidance modes structurally identical.
+            After the fix, forecast guidance gave no detectable temporal benefit for wind and a metric-dependent
+            effect for temperature, a result I report as it is.</li>
+        </ul>
+        <p class="note">The code is private. It extends the GeoDiff research codebase by Carlo Saccardi.</p>
+      </div>
+    </section>
+
+    <section id="projects" aria-labelledby="projects-h">
+      <h2 id="projects-h">Projects</h2>
+      <div class="body">
+
+        <div class="group">
+          <h3>Machine learning and data</h3>
+
+          <article class="project">
+            <div>
+              <h4><a href="https://github.com/drairikar/Assignment_2_ML">LoRA fine-tuning of Llama 3.2 for spam</a></h4>
+              <p>A single 1B-parameter model that both classifies messages as spam and generates realistic spam
+                for stress-testing filters. Loaded in 8-bit, with LoRA adapters on the attention projections and
+                loss computed only on answer tokens.</p>
+              <p class="tools">PyTorch, Hugging Face Transformers, PEFT, bitsandbytes</p>
+            </div>
+          </article>
+
+          <article class="project">
+            <div>
+              <h4><a href="https://github.com/drairikar/Meteorological-Data-Analysis--Rainfall-Prediction">Rainfall forecasting with AR and ARIMA</a></h4>
+              <p>A year of hourly weather data: stationarity tests, ACF/PACF order selection, and daily and hourly
+                forecasts.</p>
+              <p class="result">Benchmarked against naive forecasts: neither model beats persistence, because
+                intermittent, heavy-tailed rain breaks linear-Gaussian assumptions.</p>
+              <p class="tools">statsmodels, pandas</p>
+            </div>
+          </article>
+
+          <article class="project">
+            <div>
+              <h4><a href="https://github.com/drairikar/Hand-Gesture-Classification-based-on-EMG-signals">Hand-gesture classification from sEMG</a></h4>
+              <p>Six hand gestures from 8-channel surface EMG of 36 subjects, using SVM, k-NN, a 1-D CNN and an
+                LSTM.</p>
+              <p class="result">1-D CNN reaches about 84% validation accuracy.</p>
+              <p class="tools">scikit-learn, TensorFlow/Keras</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="group">
+          <h3>Signal processing</h3>
+
+          <article class="project">
+            <div>
+              <h4><a href="https://github.com/drairikar/Distributed_Signal_Processing">Distributed consensus: gossip vs. PDMM</a></h4>
+              <p>Average and median consensus in a 150-node wireless sensor network, where each node talks only to
+                its radio neighbours. Includes optimised gossip probabilities (via CVXPY), synchronous and
+                asynchronous PDMM, and packet-loss experiments.</p>
+              <p class="result">Asynchronous broadcast PDMM converges with 3.8× fewer transmissions than random
+                gossip.</p>
+              <p class="tools">NumPy, CVXPY</p>
+            </div>
+            <figure>
+              <img src="assets/consensus.png" alt="Log-scale error against transmission count for six consensus algorithms; asynchronous broadcast PDMM reaches the 1e-6 tolerance first." loading="lazy" width="1100" height="714">
+              <figcaption>Error vs. transmissions to reach 10⁻⁶.</figcaption>
+            </figure>
+          </article>
+
+          <article class="project">
+            <div>
+              <h4><a href="https://github.com/drairikar/Eye-blink-artifact-removal-from-EEG">Eye-blink removal from EEG</a></h4>
+              <p>A multichannel Wiener filter for 19-channel EEG. It estimates the blink component from
+                time-lagged covariances of the frontal electrodes and subtracts it, leaving neural activity
+                largely intact.</p>
+              <p class="tools">NumPy, SciPy</p>
+            </div>
+            <figure>
+              <img src="assets/eeg.png" alt="Three EEG channels around a blink: the original trace shows a large deflection that is absent after filtering." loading="lazy" width="992" height="567">
+              <figcaption>Before (blue) and after (orange) filtering, around one blink.</figcaption>
+            </figure>
+          </article>
+
+          <article class="project">
+            <div>
+              <h4><a href="https://github.com/drairikar/SSDP-Project">Track-before-detect particle filter</a></h4>
+              <p>Tracks a weak target from raw, unthresholded array scans and jointly infers which point-spread
+                function produced the returns. The target amplitude is marginalised analytically in the
+                likelihood.</p>
+              <p class="tools">MATLAB</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="group">
+          <h3>Optimisation and inverse problems</h3>
+
+          <article class="project">
+            <div>
+              <h4><a href="https://github.com/drairikar/Change-Detection-in-Time-Series">Change detection in a time-varying AR model</a></h4>
+              <p>Counting change points is a non-convex ℓ₀ problem. Relaxing it to a total-variation penalty
+                gives a convex program, solved with CVX and with a projected subgradient method.</p>
+              <p class="result">Recovers all three change points.</p>
+              <p class="tools">CVX, CVXPY, MATLAB</p>
+            </div>
+            <figure>
+              <img src="assets/change-detection.png" alt="True and estimated AR coefficients over time; the estimates switch level at the same three instants as the truth." loading="lazy" width="1100" height="733">
+              <figcaption>True vs. estimated coefficients a, b, c.</figcaption>
+            </figure>
+          </article>
+
+          <article class="project">
+            <div>
+              <h4><a href="https://github.com/drairikar/Wavefield-Imaging-and-MRI">Wavefield imaging by inverse scattering</a></h4>
+              <p>Reconstructs an object from the waves it scatters, using the Born approximation with 2-D Helmholtz
+                Green's functions, multi-source and multi-frequency data, and Tikhonov or truncated-SVD
+                regularisation.</p>
+              <p class="result">1.7% reconstruction error without noise, 10% at 20 dB SNR.</p>
+              <p class="tools">MATLAB, NumPy</p>
+            </div>
+            <figure>
+              <img src="assets/born.png" alt="Three panels: the true disc-shaped contrast, a near-perfect noiseless reconstruction, and a noisier reconstruction at 20 dB SNR." loading="lazy" width="1100" height="348">
+              <figcaption>True contrast and reconstructions.</figcaption>
+            </figure>
+          </article>
+
+          <article class="project">
+            <div>
+              <h4><a href="https://github.com/drairikar/one_bit_compressed_sensing">One-bit compressed sensing on MNIST</a></h4>
+              <p>Recovers sparse signals and digit images from sign-only measurements using BIHT, Bayesian one-bit
+                CS and convex relaxations, as the measurement ratio grows. Group project.</p>
+              <p class="tools">MATLAB, CVX</p>
+            </div>
+          </article>
+
+          <article class="project">
+            <div>
+              <h4><a href="https://github.com/drairikar/Sparsity-Mini-Project-EE4740-">One-time pad and perfect secrecy</a></h4>
+              <p>Implements a one-time pad and measures plaintext and ciphertext entropies to check Shannon's
+                perfect-secrecy condition.</p>
+              <p class="tools">NumPy</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" aria-labelledby="experience-h">
+      <h2 id="experience-h">Experience</h2>
+      <div class="body">
+        <ul class="timeline">
+          <li><strong>Intern, TNO</strong>
+            <span class="where">Physics-informed learning models for battery-ageing prediction in battery management systems.</span></li>
+          <li><strong>MSc Electrical Engineering, Signals &amp; Systems, TU Delft</strong>
+            <span class="where">Thesis on diffusion posterior sampling for weather downscaling, defended 2026.</span></li>
+          <li><strong>Research intern, IIT Bombay</strong>
+            <span class="where">A coupled field–circuit periodic steady-state algorithm for computational electromagnetics (FEMM, Octave).</span></li>
+          <li><strong>Power-system fault analysis tool</strong>
+            <span class="where">Paper accepted at the National Power Systems Conference (NPSC).</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="tools-h">
+      <h2 id="tools-h">Tools</h2>
+      <div class="body">
+        <dl class="tools-list">
+          <div><dt>Languages</dt><dd>Python, MATLAB, LaTeX</dd></div>
+          <div><dt>ML</dt><dd>PyTorch, scikit-learn, TensorFlow/Keras, Hugging Face Transformers and PEFT</dd></div>
+          <div><dt>Statistics, optimisation</dt><dd>statsmodels, SciPy, CVX and CVXPY, pandas</dd></div>
+          <div><dt>Compute</dt><dd>Slurm on HPC clusters (Snellius), Git</dd></div>
+        </dl>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Devashish Rairikar. Code for every public project is on <a href="https://github.com/drairikar">GitHub</a>.
+  </footer>
+</div>
+
+<script>
+  // Hero trace: a noisy recording that settles into a clean signal as it crosses the page.
+  (function () {
+    var path = document.getElementById("trace");
+    if (!path) return;
+    var n = 600, d = "";
+    var seed = 7;
+    function rand() { seed = (seed * 16807) % 2147483647; return seed / 2147483647 - 0.5; }
+    var prev = 0;
+    for (var i = 0; i <= n; i++) {
+      var t = i / n;
+      var clean = 26 * Math.sin(t * 18) + 12 * Math.sin(t * 47 + 1.3);
+      prev = 0.55 * prev + rand() * 70;                    // coloured noise
+      var fade = 1 - 1 / (1 + Math.exp(-14 * (t - 0.45))); // noise dies out across the page
+      var y = 70 - clean - prev * fade;
+      d += (i ? "L" : "M") + (t * 1000).toFixed(1) + " " + y.toFixed(1);
+    }
+    path.setAttribute("d", d);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!path.animate) return;
+    var len = path.getTotalLength();
+    path.style.strokeDasharray = len;
+    path.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }],
+                 { duration: 2400, easing: "cubic-bezier(.4,0,.2,1)", fill: "forwards" });
+  })();
+</script>
+</body>
+</html>
